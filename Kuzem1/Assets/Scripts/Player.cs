@@ -7,17 +7,26 @@ public class Player : MonoBehaviour
     public float speed = 100;
     public float playerXBorder;
     public float playerYBorder;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+ 
 
-    // Update is called once per frame
     void Update()
     {
         MovePlayer();
         ClampPlayerPosition();
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.CompareTag("Enemy"))
+        {
+            gameObject.SetActive(false);
+        }
+        if(collision.CompareTag("Collectable"))
+        {
+            collision.gameObject.SetActive(false);
+        }
+
     }
 
     private void ClampPlayerPosition()
