@@ -5,6 +5,8 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
     public Enemy enemyPrefab;
+
+    public float enemyYSpacing = 2;
     public void StartEnemyManager()
     {
         SpawnEnemies();
@@ -15,7 +17,9 @@ public class EnemyManager : MonoBehaviour
         for (int i = 0; i < 10; i++)
         {
             var newEnemy = Instantiate(enemyPrefab);
-            newEnemy.transform.position = new Vector3(Random.Range(-2f,2f), 6+(1+i), 0);
+            float enemyXPos = Random.Range(-2f, 2f);
+            float enemyYPos = 6 + (i * enemyYSpacing);
+            newEnemy.transform.position = new Vector3(enemyXPos, enemyYPos , 0);
         }
         
     }

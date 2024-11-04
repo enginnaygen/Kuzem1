@@ -7,12 +7,22 @@ public class Player : MonoBehaviour
     public float speed = 100;
     public float playerXBorder;
     public float playerYBorder;
- 
 
+    public Bullet bulletPrefab;
+    public float bulletSpeed =5;
+ 
+   
     void Update()
     {
+
+       
         MovePlayer();
         ClampPlayerPosition();
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Shoot();
+        }
     }
 
 
@@ -78,5 +88,12 @@ public class Player : MonoBehaviour
         }
 
         transform.position += direction.normalized * Time.deltaTime * speed;
+    }
+
+    void Shoot()
+    {
+        Bullet newBullet = Instantiate(bulletPrefab);
+        newBullet.transform.position = transform.position;
+        newBullet.StartBullet(bulletSpeed);
     }
 }

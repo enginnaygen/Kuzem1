@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 315753824}
   - component: {fileID: 315753823}
   m_Layer: 0
-  m_Name: EnemySpawner
+  m_Name: EnemyManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 7809934598439218250, guid: be69af12e6939304d88b35afb36a011c, type: 3}
+  enemyYSpacing: 2
 --- !u!4 &315753824
 Transform:
   m_ObjectHideFlags: 0
@@ -378,6 +379,8 @@ MonoBehaviour:
   speed: 10
   playerXBorder: 3
   playerYBorder: 5
+  bulletPrefab: {fileID: 3864848829381010582, guid: e50d7a717615e5b4cb8ffc6e2c9d524d, type: 3}
+  bulletSpeed: 5
 --- !u!4 &566352049
 Transform:
   m_ObjectHideFlags: 0
@@ -426,7 +429,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.002782017, y: -0.07789731}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -437,7 +440,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.5493085, y: 0.8442054}
   m_EdgeRadius: 0
 --- !u!50 &566352051
 Rigidbody2D:
