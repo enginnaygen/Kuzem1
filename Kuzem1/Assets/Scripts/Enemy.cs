@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,15 +7,22 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public float speed = 5;
-    public int startHealth = 10;
+    public int minStartHealth = 5;
+    public int maxStartHealth = 15;
 
     int currentHealth;
 
     public TextMeshPro healthTMP;
+    SpriteRenderer spriteRenderer;
+
+    private void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
     void Start()
     {
-        currentHealth = startHealth;
+        currentHealth = Random.Range(minStartHealth, maxStartHealth);
         healthTMP.text = currentHealth.ToString();
     }
 
@@ -29,7 +37,15 @@ public class Enemy : MonoBehaviour
         currentHealth -= damage;
         healthTMP.text = currentHealth.ToString();
 
-        if(currentHealth <= 0)
+        transform.DOKill();
+        transform.localScale = Vector3.one;
+        transform.DOScale(1.3f, .2f).SetLoops(2, LoopType.Yoyo);
+
+        spriteRenderer.DOKill();
+        spriteRenderer.color = Color.red;
+        spriteRenderer.DOColor(Color.white, .1f).SetLoops(2, LoopType.Yoyo);
+
+        if (currentHealth <= 0)
         {
             gameObject.SetActive(false);
             //Destroy(gameObject);
