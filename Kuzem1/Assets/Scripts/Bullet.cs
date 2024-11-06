@@ -5,14 +5,20 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public float speed;
-
+    public int damage = 1;
+    
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.CompareTag("Enemy"))
         {
             gameObject.SetActive(false);
-            collision.gameObject.SetActive(false);
+            collision.GetComponent<Enemy>().GetHit(damage);
+        }
+
+        if(collision.CompareTag("Border"))
+        {
+            gameObject.SetActive(false);
         }
     }
     public void StartBullet(float bulletSpeed)
@@ -25,7 +31,7 @@ public class Bullet : MonoBehaviour
     }*/
     private void Start()
     {
-        Destroy(this.gameObject, 3f);
+        //Destroy(this.gameObject, 3f);
     }
     // Update is called once per frame
     void Update()
