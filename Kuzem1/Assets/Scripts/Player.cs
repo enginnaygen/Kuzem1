@@ -9,20 +9,20 @@ public class Player : MonoBehaviour
     public float playerYBorder;
 
     public Bullet bulletPrefab;
+    public Transform bulletParent;
     public float bulletSpeed =5;
- 
-   
+    public float waitShoot = .5f;
+
+
+    private void Start()
+    {
+        StartCoroutine(ShootCoroutine());
+    }
+
     void Update()
     {
-
-       
         MovePlayer();
         ClampPlayerPosition();
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Shoot();
-        }
     }
 
 
@@ -33,6 +33,10 @@ public class Player : MonoBehaviour
             gameObject.SetActive(false);
         }
         if(collision.CompareTag("Collectable"))
+        {
+            collision.gameObject.SetActive(false);
+        }
+        if(collision.CompareTag("Coin"))
         {
             collision.gameObject.SetActive(false);
         }
@@ -90,10 +94,40 @@ public class Player : MonoBehaviour
         transform.position += direction.normalized * Time.deltaTime * speed;
     }
 
-    void Shoot()
+    IEnumerator ShootCoroutine()
     {
-        Bullet newBullet = Instantiate(bulletPrefab);
+        while(true)
+        {
+            yield return new WaitForSeconds(waitShoot);
+
+            for (int i = 0; i < 3; i++)
+            {
+                if(i==0)
+                {
+                    Shoot(Vector3.up);
+
+                }
+                else if(i == 1)
+                {
+                    Vector3 leftUp = new Vector3(-.5f, 1, 0);
+                    Shoot(leftUp);
+                }
+                else if(i==2)
+                {
+                    Vector3 rightUp = new Vector3(.5f, 1, 0);
+                    Shoot(rightUp);
+
+
+                }
+
+            }
+        }
+        
+    }
+    void Shoot(Vector3 direction)
+    {
+        Bullet newBullet = Instantiate(bulletPrefab, bulletParent);
         newBullet.transform.position = transform.position;
-        newBullet.StartBullet(bulletSpeed);
+        newBullet.StartBullet(bulletSpeed, direction);
     }
 }

@@ -13,12 +13,10 @@ public class Enemy : MonoBehaviour
     int currentHealth;
 
     public TextMeshPro healthTMP;
-    SpriteRenderer spriteRenderer;
+    [SerializeField] SpriteRenderer spriteRenderer;
+    public GameObject coinPrefab;
 
-    private void Awake()
-    {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-    }
+  
 
     void Start()
     {
@@ -26,7 +24,6 @@ public class Enemy : MonoBehaviour
         healthTMP.text = currentHealth.ToString();
     }
 
-    // Update is called once per frame
     void Update()
     {
         transform.position += Vector3.down * Time.deltaTime * speed;
@@ -47,6 +44,8 @@ public class Enemy : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            GameObject newCoin = Instantiate(coinPrefab);
+            newCoin.transform.position = transform.position;
             gameObject.SetActive(false);
             //Destroy(gameObject);
         }

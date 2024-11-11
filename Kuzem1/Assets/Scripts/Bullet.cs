@@ -6,7 +6,12 @@ public class Bullet : MonoBehaviour
 {
     public float speed;
     public int damage = 1;
-    
+    Vector3 direction;
+
+    void Update()
+    {
+        MoveBullet();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -21,21 +26,15 @@ public class Bullet : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
-    public void StartBullet(float bulletSpeed)
+    public void StartBullet(float bulletSpeed, Vector3 direction)
     {
         speed = bulletSpeed;
+        this.direction = direction;
     }
-    /*public Bullet(float bulletSpeed)
+ 
+  
+    private void MoveBullet()
     {
-        speed = bulletSpeed;
-    }*/
-    private void Start()
-    {
-        //Destroy(this.gameObject, 3f);
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        transform.position += Vector3.up * speed * Time.deltaTime;  
+        transform.position += direction * speed * Time.deltaTime;
     }
 }
