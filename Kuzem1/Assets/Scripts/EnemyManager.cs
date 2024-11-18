@@ -5,23 +5,71 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
     public Enemy enemyPrefab;
+    public Enemy bossEnemyPrefab;
 
     public float enemyYSpacing = 2;
     public Transform enemyParent;
+
+    [SerializeField] int spawnEnemyCount;
     public void StartEnemyManager()
     {
-        SpawnEnemies();
+        StartCoroutine(EnemyGererationCoroutine());
+        //SpawnEnemies();
     }
 
-    void SpawnEnemies()
+    IEnumerator EnemyGererationCoroutine()
     {
-        for (int i = 0; i < 1000; i++)
+        while(true)
         {
-            var newEnemy = Instantiate(enemyPrefab, enemyParent);
-            float enemyXPos = Random.Range(-2f, 2f);
-            float enemyYPos = 6 + (i * enemyYSpacing);
-            newEnemy.transform.position = new Vector3(enemyXPos, enemyYPos , 0);
+            float randomSpawnWait = Random.Range(0f, 2f);
+            yield return new WaitForSeconds(randomSpawnWait);
+
+            if(spawnEnemyCount < 5)
+            {
+                if (Random.value < .75f)
+                {
+                    SpawnNewEnemy(-2f, 2f);
+                }
+                else
+                {
+                    SpawnTwoEnemies();
+                }
+            }
+
+            else
+            {
+                yield return new WaitForSeconds(3f);
+                SpawnBoss();
+                break;
+            }
+           
+
         }
-        
+    }
+
+    void SpawnNewEnemy(float minXpos,float maxXpos)
+    {
+        var newEnemy = Instantiate(enemyPrefab, enemyParent);
+        float enemyXPos = Random.Range(minXpos, maxXpos);
+        float enemyYPos = 4 * enemyYSpacing;
+        newEnemy.transform.position = new Vector3(enemyXPos, enemyYPos, 0);
+
+        spawnEnemyCount++;
+
+    }
+
+    void SpawnTwoEnemies()
+    {
+        SpawnNewEnemy(1f,2.2f);
+
+        SpawnNewEnemy(-2.2f,-1f);
+    }
+
+    void SpawnBoss()
+    {
+        var newEnemy = Instantiate(bossEnemyPrefab, enemyParent);
+        float enemyXPos = Random.Range(-2f, 2f);
+        float enemyYPos = 4 * enemyYSpacing;
+        newEnemy.transform.position = new Vector3(enemyXPos, enemyYPos, 0);
     }
 }
