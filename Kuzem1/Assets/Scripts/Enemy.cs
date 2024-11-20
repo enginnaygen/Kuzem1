@@ -14,7 +14,11 @@ public class Enemy : MonoBehaviour
 
     public TextMeshPro healthTMP;
     [SerializeField] SpriteRenderer spriteRenderer;
+
     public GameObject coinPrefab;
+    public GameObject powerUpPrefab;
+
+    bool didSpawnCoin;
 
   
 
@@ -42,12 +46,28 @@ public class Enemy : MonoBehaviour
         spriteRenderer.color = Color.red;
         spriteRenderer.DOColor(Color.white, .1f).SetLoops(2, LoopType.Yoyo);
 
-        if (currentHealth <= 0)
+        if (currentHealth <= 0 && !didSpawnCoin)
         {
-            GameObject newCoin = Instantiate(coinPrefab);
-            newCoin.transform.position = transform.position;
+            if(Random.value >.5)
+            {
+                GameObject newCoin = Instantiate(coinPrefab);
+                newCoin.transform.position = transform.position + Vector3.up;
+                newCoin.GetComponent<Coin>().StartCoin();
+
+            }
+            else
+            {
+                GameObject newPowerUp = Instantiate(powerUpPrefab);
+                newPowerUp.transform.position = transform.position + Vector3.up;
+                newPowerUp.GetComponent<PowerUp>().StartPowerUp();
+            }
+
+            didSpawnCoin = true;
             gameObject.SetActive(false);
+
+
+
             //Destroy(gameObject);
-        }
+        }   
     }
 }

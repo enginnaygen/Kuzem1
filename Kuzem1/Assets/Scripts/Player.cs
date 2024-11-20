@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public Bullet bulletPrefab;
+    public Transform bulletParent;
+    public GameDirector gameDirector;
+    //public ParticleSystem coinParticle;
+
     public float speed = 100;
     public float playerXBorder;
     public float playerYBorder;
-
-    public Bullet bulletPrefab;
-    public Transform bulletParent;
+   
     public float bulletSpeed =5;
     public float waitShoot = .5f;
+
+    public List<Vector3> shootDirections;
 
 
     private void Start()
@@ -37,6 +42,13 @@ public class Player : MonoBehaviour
             collision.gameObject.SetActive(false);
         }
         if(collision.CompareTag("Coin"))
+        {
+            gameDirector.coinManager.IncreaseCoinCount(1);
+            //gameDirector.fxManager.PlayFX(collision.transform.position, coinParticle);
+            gameDirector.fxManager.PlayCoinCollectedFX(collision.transform.position);
+            collision.gameObject.SetActive(false);
+        }
+        if(collision.CompareTag("PowerUp"))
         {
             collision.gameObject.SetActive(false);
         }
@@ -128,6 +140,6 @@ public class Player : MonoBehaviour
     {
         Bullet newBullet = Instantiate(bulletPrefab, bulletParent);
         newBullet.transform.position = transform.position;
-        newBullet.StartBullet(bulletSpeed, direction);
+        newBullet.StartBullet(bulletSpeed, direction, gameDirector);
     }
 }

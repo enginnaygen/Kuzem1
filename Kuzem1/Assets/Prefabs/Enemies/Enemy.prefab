@@ -353,3 +353,4 @@ MonoBehaviour:
   healthTMP: {fileID: 5166749072878843493}
   spriteRenderer: {fileID: 6720398888940479302}
   coinPrefab: {fileID: 7552100674173106038, guid: 82d095be2d3d93340a9a80ad9e50420d, type: 3}
+  powerUpPrefab: {fileID: 4733548880151656406, guid: c96e12fd11e9353449fa15aff16f2040, type: 3}

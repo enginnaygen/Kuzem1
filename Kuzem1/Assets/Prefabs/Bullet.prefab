@@ -99,7 +99,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be64f0a3c3fef7b428f279953974f441, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletParticle: {fileID: 5843443310342437966, guid: 8aed117f147f8ff4fba275ac2636488d, type: 3}
   speed: 0
+  damage: 1
 --- !u!58 &4636201009812617738
 CircleCollider2D:
   m_ObjectHideFlags: 0

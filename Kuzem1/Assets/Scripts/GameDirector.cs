@@ -5,14 +5,11 @@ using UnityEngine;
 public class GameDirector : MonoBehaviour
 {
     public EnemyManager enemyManager;
+    public CoinManager coinManager;
+    public FxManager fxManager;
      void Start()
     {
         enemyManager.StartEnemyManager();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }
