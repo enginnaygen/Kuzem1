@@ -11,21 +11,25 @@ public class Enemy : MonoBehaviour
     public int maxStartHealth = 15;
 
     int currentHealth;
+    int startHealth;
 
     public TextMeshPro healthTMP;
     [SerializeField] SpriteRenderer spriteRenderer;
 
     public GameObject coinPrefab;
     public GameObject powerUpPrefab;
+    Player player;
 
     bool didSpawnCoin;
 
-  
-
-    void Start()
+    public void StartEnemy(Player player)
     {
-        currentHealth = Random.Range(minStartHealth, maxStartHealth);
+        this.player = player;
+        maxStartHealth += Random.Range(0, 10);
+        startHealth += Random.Range(5,10) * player.shootDirections.Count;
+        currentHealth = startHealth;
         healthTMP.text = currentHealth.ToString();
+
     }
 
     void Update()

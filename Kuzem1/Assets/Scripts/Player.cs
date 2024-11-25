@@ -12,15 +12,20 @@ public class Player : MonoBehaviour
     public float speed = 100;
     public float playerXBorder;
     public float playerYBorder;
+    public int startHealth;
+    int currentHealth;
    
     public float bulletSpeed =5;
     public float waitShoot = .5f;
 
     public List<Vector3> shootDirections;
 
+    public SpriteRenderer healthBarFill;
 
-    private void Start()
+
+    public void StartPlayer()
     {
+        currentHealth = startHealth;
         StartCoroutine(ShootCoroutine());
     }
 
@@ -35,7 +40,15 @@ public class Player : MonoBehaviour
     {
         if(collision.CompareTag("Enemy"))
         {
-            gameObject.SetActive(false);
+            currentHealth -= 1;
+
+            UpdateHealthBarFill((float)currentHealth / startHealth);
+
+            if(currentHealth <= 0)
+            {
+                collision.gameObject.SetActive(false);
+                gameObject.SetActive(false);
+            }
         }
         if(collision.CompareTag("Collectable"))
         {
@@ -50,9 +63,15 @@ public class Player : MonoBehaviour
         }
         if(collision.CompareTag("PowerUp"))
         {
+            shootDirections.Add(new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0f).normalized);
             collision.gameObject.SetActive(false);
         }
 
+    }
+
+    void UpdateHealthBarFill(float ratio)
+    {
+        healthBarFill.transform.localScale = new Vector3(ratio, transform.localScale.y, transform.localScale.z);
     }
 
     private void ClampPlayerPosition()
@@ -112,25 +131,9 @@ public class Player : MonoBehaviour
         {
             yield return new WaitForSeconds(waitShoot);
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0;i < shootDirections.Count; i++)
             {
-                if(i==0)
-                {
-                    Shoot(Vector3.up);
-
-                }
-                else if(i == 1)
-                {
-                    Vector3 leftUp = new Vector3(-.5f, 1, 0);
-                    Shoot(leftUp);
-                }
-                else if(i==2)
-                {
-                    Vector3 rightUp = new Vector3(.5f, 1, 0);
-                    Shoot(rightUp);
-
-
-                }
+                Shoot(shootDirections[i]);
 
             }
         }

@@ -24,11 +24,12 @@ public class Bullet : MonoBehaviour
             collision.GetComponent<Enemy>().GetHit(damage);
             //gameDirector.fxManager.PlayFX(transform.position,bulletParticle);
             gameDirector.fxManager.PlayBulletdFX(transform.position);
+            Destroy(gameObject);
         }
 
         if (collision.CompareTag("Border"))
         {
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
     public void StartBullet(float bulletSpeed, Vector3 direction, GameDirector gameDirector)

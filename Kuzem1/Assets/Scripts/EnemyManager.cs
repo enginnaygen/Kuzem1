@@ -11,6 +11,10 @@ public class EnemyManager : MonoBehaviour
     public Transform enemyParent;
 
     [SerializeField] int spawnEnemyCount;
+
+    [SerializeField] Player player;
+
+    [SerializeField] int totalEnemy;
     public void StartEnemyManager()
     {
         StartCoroutine(EnemyGererationCoroutine());
@@ -21,10 +25,10 @@ public class EnemyManager : MonoBehaviour
     {
         while(true)
         {
-            float randomSpawnWait = Random.Range(0f, 2f);
+            float randomSpawnWait = Random.Range(1f, 2f);
             yield return new WaitForSeconds(randomSpawnWait);
 
-            if(spawnEnemyCount < 5)
+            if(spawnEnemyCount < totalEnemy)
             {
                 if (Random.value < .75f)
                 {
@@ -53,7 +57,7 @@ public class EnemyManager : MonoBehaviour
         float enemyXPos = Random.Range(minXpos, maxXpos);
         float enemyYPos = 4 * enemyYSpacing;
         newEnemy.transform.position = new Vector3(enemyXPos, enemyYPos, 0);
-
+        newEnemy.StartEnemy(player);
         spawnEnemyCount++;
 
     }
@@ -71,5 +75,6 @@ public class EnemyManager : MonoBehaviour
         float enemyXPos = Random.Range(-2f, 2f);
         float enemyYPos = 4 * enemyYSpacing;
         newEnemy.transform.position = new Vector3(enemyXPos, enemyYPos, 0);
+        newEnemy.StartEnemy(player);
     }
 }
