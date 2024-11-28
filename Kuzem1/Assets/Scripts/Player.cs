@@ -1,5 +1,7 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.U2D.Animation;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -22,11 +24,26 @@ public class Player : MonoBehaviour
 
     public SpriteRenderer healthBarFill;
 
+    Vector3 mousePivotPosition;
 
-    public void StartPlayer()
+    Coroutine shootCoroutine;
+
+
+    public void ReStartPlayer()
     {
+        gameObject.SetActive(true);
+        transform.position = new Vector3(0f, -2.8f, 0);
         currentHealth = startHealth;
-        StartCoroutine(ShootCoroutine());
+        UpdateHealthBarFill(1);
+
+        if(shootCoroutine != null)
+        {
+            StopCoroutine(shootCoroutine);
+        }
+        shootCoroutine = StartCoroutine(ShootCoroutine());
+
+        shootDirections.Clear();
+        shootDirections.Add(Vector3.up);
     }
 
     void Update()
@@ -72,6 +89,17 @@ public class Player : MonoBehaviour
     void UpdateHealthBarFill(float ratio)
     {
         healthBarFill.transform.localScale = new Vector3(ratio, transform.localScale.y, transform.localScale.z);
+        //healthBarFill.transform.DOScale(ratio, .5f);
+        healthBarFill.DOColor(Color.red, .1f).SetLoops(2, LoopType.Yoyo);
+        if(ratio < .5f)
+        {
+            healthBarFill.color = Color.red;
+        }
+        else
+        {
+            healthBarFill.color = Color.green;
+        }
+
     }
 
     private void ClampPlayerPosition()
@@ -105,7 +133,19 @@ public class Player : MonoBehaviour
     {
         Vector3 direction = Vector3.zero;
 
-        if (Input.GetKey(KeyCode.W))
+        Debug.Log(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+
+        if(Input.GetMouseButtonDown(0))
+        {
+            //mousePivotPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePivotPosition = Input.mousePosition;
+        }
+        if(Input.GetMouseButton(0))
+        {
+            //direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - mousePivotPosition;
+            direction = Input.mousePosition - mousePivotPosition;
+        }
+        /*if (Input.GetKey(KeyCode.W))
         {
             direction += Vector3.up;
         }
@@ -120,7 +160,7 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             direction += Vector3.right;
-        }
+        }*/
 
         transform.position += direction.normalized * Time.deltaTime * speed;
     }

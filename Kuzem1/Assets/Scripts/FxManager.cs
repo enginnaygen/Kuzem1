@@ -7,6 +7,9 @@ public class FxManager : MonoBehaviour
     public ParticleSystem bulletCollectesPS;
     public ParticleSystem coinCollectesPS;
 
+    [SerializeField] Transform particleParent;
+
+
     public void PlayCoinCollectedFX(Vector3 pos)
     {
         var newPS = Instantiate(coinCollectesPS);
@@ -17,7 +20,7 @@ public class FxManager : MonoBehaviour
 
     public void PlayBulletdFX(Vector3 pos)
     {
-        var newPS = Instantiate(bulletCollectesPS);
+        var newPS = Instantiate(bulletCollectesPS, particleParent);
         newPS.transform.position = pos;
         newPS.Play();
 

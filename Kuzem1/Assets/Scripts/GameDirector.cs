@@ -10,8 +10,24 @@ public class GameDirector : MonoBehaviour
     public Player player;
      void Start()
     {
-        player.StartPlayer();
-        enemyManager.StartEnemyManager();
+        ReStartLevel();
     }
-    
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            ReStartLevel();
+        }
+    }
+    private void ReStartLevel()
+    {
+        player.ReStartPlayer();
+        enemyManager.ReStartEnemyManager();
+    }
+
+    public void LevelFailed()
+    {
+
+    }
 }

@@ -15,10 +15,33 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] Player player;
 
     [SerializeField] int totalEnemy;
-    public void StartEnemyManager()
+
+    [SerializeField] List<Enemy> enemies = new List<Enemy>();
+
+    Coroutine enemyGenerationCoroutine;
+    public void ReStartEnemyManager()
     {
-        StartCoroutine(EnemyGererationCoroutine());
+        DeleteEnemies();
+
+        if (enemyGenerationCoroutine != null)
+        {
+            StopCoroutine(enemyGenerationCoroutine);
+        }
+        enemyGenerationCoroutine = StartCoroutine(EnemyGererationCoroutine());
+
+        spawnEnemyCount = 0;
+
         //SpawnEnemies();
+    }
+
+    void DeleteEnemies()
+    {
+        foreach (Enemy enemy in enemies)
+        {
+            Destroy(enemy.gameObject);
+        }
+        enemies.Clear();
+
     }
 
     IEnumerator EnemyGererationCoroutine()
@@ -58,6 +81,8 @@ public class EnemyManager : MonoBehaviour
         float enemyYPos = 4 * enemyYSpacing;
         newEnemy.transform.position = new Vector3(enemyXPos, enemyYPos, 0);
         newEnemy.StartEnemy(player);
+        enemies.Add(newEnemy);
+        
         spawnEnemyCount++;
 
     }
@@ -76,5 +101,7 @@ public class EnemyManager : MonoBehaviour
         float enemyYPos = 4 * enemyYSpacing;
         newEnemy.transform.position = new Vector3(enemyXPos, enemyYPos, 0);
         newEnemy.StartEnemy(player);
+        enemies.Add(newEnemy);
+
     }
 }
