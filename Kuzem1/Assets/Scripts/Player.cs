@@ -46,6 +46,14 @@ public class Player : MonoBehaviour
         shootDirections.Add(Vector3.up);
     }
 
+    public void StopShooting()
+    {
+        if(shootCoroutine != null)
+        {
+            StopCoroutine(shootCoroutine);
+        }
+    }
+
     void Update()
     {
         MovePlayer();
@@ -65,6 +73,7 @@ public class Player : MonoBehaviour
             {
                 collision.gameObject.SetActive(false);
                 gameObject.SetActive(false);
+                gameDirector.LevelFailed();
             }
         }
         if(collision.CompareTag("Collectable"))

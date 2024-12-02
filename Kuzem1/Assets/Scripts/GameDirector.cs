@@ -8,8 +8,11 @@ public class GameDirector : MonoBehaviour
     public CoinManager coinManager;
     public FxManager fxManager;
     public Player player;
+    public MainUI mainUI;
+
      void Start()
     {
+        SetInitialLevel();
         ReStartLevel();
     }
 
@@ -20,14 +23,32 @@ public class GameDirector : MonoBehaviour
             ReStartLevel();
         }
     }
-    private void ReStartLevel()
+    public void ReStartLevel()
     {
         player.ReStartPlayer();
         enemyManager.ReStartEnemyManager();
+        mainUI.CloseMainUI();
+        mainUI.SetLevelText(PlayerPrefs.GetInt("HighestLevelReached"));
     }
 
     public void LevelFailed()
     {
+        mainUI.LevelFailed();
+    }
 
+    public void SetInitialLevel()
+    {
+        int initialLevel = PlayerPrefs.GetInt("HighestLevelReached");
+        if(initialLevel == 0)
+        {
+            initialLevel = 1;
+        }
+        PlayerPrefs.SetInt("HighestLevelReached", initialLevel);
+    }
+
+    public void LevelComplated()
+    {
+        int currentHighestLevel = PlayerPrefs.GetInt("HighestLevelReached");
+        PlayerPrefs.SetInt("HighestLevelReached", currentHighestLevel++);
     }
 }

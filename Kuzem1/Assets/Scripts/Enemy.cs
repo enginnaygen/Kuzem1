@@ -13,6 +13,8 @@ public class Enemy : MonoBehaviour
     int currentHealth;
     int startHealth;
 
+    public bool isBoss;
+
     public TextMeshPro healthTMP;
     [SerializeField] SpriteRenderer spriteRenderer;
 
@@ -64,6 +66,12 @@ public class Enemy : MonoBehaviour
                 GameObject newPowerUp = Instantiate(powerUpPrefab);
                 newPowerUp.transform.position = transform.position + Vector3.up;
                 newPowerUp.GetComponent<PowerUp>().StartPowerUp();
+            }
+
+            if(isBoss)
+            {
+                player.gameDirector.LevelComplated();
+                player.StopShooting();
             }
 
             didSpawnCoin = true;
