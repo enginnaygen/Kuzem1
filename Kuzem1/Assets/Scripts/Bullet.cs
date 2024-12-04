@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    GameDirector gameDirector;
     public ParticleSystem bulletParticle;
-
     public float speed;
     public int damage = 1;
+
     Vector3 direction;
+    GameDirector gameDirector;
 
     void Update()
     {

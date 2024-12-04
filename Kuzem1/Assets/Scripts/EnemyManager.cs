@@ -6,6 +6,8 @@ public class EnemyManager : MonoBehaviour
 {
     public Enemy enemyPrefab;
     public Enemy bossEnemyPrefab;
+    public Enemy fastEnemyPrefab;
+    public GameDirector gameDirector;
 
     public float enemyYSpacing = 2;
     public Transform enemyParent;
@@ -51,7 +53,10 @@ public class EnemyManager : MonoBehaviour
             float randomSpawnWait = Random.Range(1f, 2f);
             yield return new WaitForSeconds(randomSpawnWait);
 
-            if(spawnEnemyCount < totalEnemy)
+            int enemyCountBonus = totalEnemy + (gameDirector.levelNo - 5) * 5;
+            enemyCountBonus = Mathf.Min(enemyCountBonus);
+
+            if (spawnEnemyCount < enemyCountBonus)
             {
                 if (Random.value < .75f)
                 {
@@ -76,6 +81,7 @@ public class EnemyManager : MonoBehaviour
 
     void SpawnNewEnemy(float minXpos,float maxXpos)
     {
+
         var newEnemy = Instantiate(enemyPrefab, enemyParent);
         float enemyXPos = Random.Range(minXpos, maxXpos);
         float enemyYPos = 4 * enemyYSpacing;

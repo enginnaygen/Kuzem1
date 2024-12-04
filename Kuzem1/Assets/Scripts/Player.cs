@@ -36,14 +36,19 @@ public class Player : MonoBehaviour
         currentHealth = startHealth;
         UpdateHealthBarFill(1);
 
-        if(shootCoroutine != null)
+        if (shootCoroutine != null)
         {
             StopCoroutine(shootCoroutine);
         }
-        shootCoroutine = StartCoroutine(ShootCoroutine());
+        //StartShooting();
 
         shootDirections.Clear();
         shootDirections.Add(Vector3.up);
+    }
+
+    private void StartShooting()
+    {
+        shootCoroutine = StartCoroutine(ShootCoroutine());
     }
 
     public void StopShooting()
@@ -58,6 +63,17 @@ public class Player : MonoBehaviour
     {
         MovePlayer();
         ClampPlayerPosition();
+
+        if(Input.GetMouseButtonDown(0))
+        {
+            StartShooting();
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            StopShooting();
+        }
+
+       
     }
 
 
@@ -142,7 +158,6 @@ public class Player : MonoBehaviour
     {
         Vector3 direction = Vector3.zero;
 
-        Debug.Log(Camera.main.ScreenToWorldPoint(Input.mousePosition));
 
         if(Input.GetMouseButtonDown(0))
         {
@@ -193,5 +208,6 @@ public class Player : MonoBehaviour
         Bullet newBullet = Instantiate(bulletPrefab, bulletParent);
         newBullet.transform.position = transform.position;
         newBullet.StartBullet(bulletSpeed, direction, gameDirector);
+        gameDirector.audioManager.PlayBulleyAS();
     }
 }

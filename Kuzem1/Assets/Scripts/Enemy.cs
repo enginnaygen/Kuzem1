@@ -23,6 +23,7 @@ public class Enemy : MonoBehaviour
     Player player;
 
     bool didSpawnCoin;
+    bool isEnemyDestroyed;
 
     public void StartEnemy(Player player)
     {
@@ -52,34 +53,56 @@ public class Enemy : MonoBehaviour
         spriteRenderer.color = Color.red;
         spriteRenderer.DOColor(Color.white, .1f).SetLoops(2, LoopType.Yoyo);
 
-        if (currentHealth <= 0 && !didSpawnCoin)
+        if(!isEnemyDestroyed)
         {
-            if(Random.value >.5)
+            if (currentHealth <= 0)
             {
-                GameObject newCoin = Instantiate(coinPrefab);
-                newCoin.transform.position = transform.position + Vector3.up;
-                newCoin.GetComponent<Coin>().StartCoin();
+                KillEnemy();
 
+
+
+                //Destroy(gameObject);
+            }
+
+        }
+        
+    }
+
+    private void KillEnemy()
+    {
+        if(!isEnemyDestroyed)
+        {
+            if (!isBoss)
+            {
+                if (Random.value > .5)
+                {
+                    GameObject newCoin = Instantiate(coinPrefab);
+                    newCoin.transform.position = transform.position + Vector3.up;
+                    newCoin.GetComponent<Coin>().StartCoin();
+
+                }
+                else
+                {
+                    GameObject newPowerUp = Instantiate(powerUpPrefab);
+                    newPowerUp.transform.position = transform.position + Vector3.up;
+                    newPowerUp.GetComponent<PowerUp>().StartPowerUp();
+                }
             }
             else
             {
-                GameObject newPowerUp = Instantiate(powerUpPrefab);
-                newPowerUp.transform.position = transform.position + Vector3.up;
-                newPowerUp.GetComponent<PowerUp>().StartPowerUp();
+                player.gameDirector.LevelComplated(); // burada leveli arttiriyor
+
             }
 
-            if(isBoss)
-            {
-                player.gameDirector.LevelComplated();
-                player.StopShooting();
-            }
+            isEnemyDestroyed = true;
 
-            didSpawnCoin = true;
-            gameObject.SetActive(false);
+            player.gameDirector.audioManager.EnemyDestroyAs();
+        }
+        
 
 
-
-            //Destroy(gameObject);
-        }   
+        //didSpawnCoin = true;
+        gameObject.SetActive(false);
+        
     }
 }

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -12,10 +13,12 @@ public class MainUI : MonoBehaviour
     public void CloseMainUI()
     {
         failCanvasGroup.gameObject.SetActive(false);
+        victoryCanvasGroup.gameObject.SetActive(false);
     }
     public void LevelFailed()
     {
         failCanvasGroup.gameObject.SetActive(true);
+        failCanvasGroup.DOFade(1f, .5f);
     }
 
     public void SetLevelText(int level)
@@ -25,5 +28,13 @@ public class MainUI : MonoBehaviour
     public void LevelComplated()
     {
         victoryCanvasGroup.gameObject.SetActive(true);
+    }
+
+    public void RestartMainUI()
+    {
+        failCanvasGroup.gameObject.SetActive(false);
+        failCanvasGroup.alpha = 0;
+        victoryCanvasGroup.gameObject.SetActive(false);
+        victoryCanvasGroup.alpha = 0;
     }
 }

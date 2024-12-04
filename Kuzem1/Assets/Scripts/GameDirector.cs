@@ -9,6 +9,9 @@ public class GameDirector : MonoBehaviour
     public FxManager fxManager;
     public Player player;
     public MainUI mainUI;
+    public AudioManager audioManager;
+
+    public int levelNo;
 
      void Start()
     {
@@ -25,10 +28,11 @@ public class GameDirector : MonoBehaviour
     }
     public void ReStartLevel()
     {
+        levelNo = PlayerPrefs.GetInt("HighestLevelReached");
         player.ReStartPlayer();
         enemyManager.ReStartEnemyManager();
         mainUI.CloseMainUI();
-        mainUI.SetLevelText(PlayerPrefs.GetInt("HighestLevelReached"));
+        mainUI.SetLevelText(levelNo);
     }
 
     public void LevelFailed()
@@ -49,6 +53,7 @@ public class GameDirector : MonoBehaviour
     public void LevelComplated()
     {
         int currentHighestLevel = PlayerPrefs.GetInt("HighestLevelReached");
-        PlayerPrefs.SetInt("HighestLevelReached", currentHighestLevel++);
+        PlayerPrefs.SetInt("HighestLevelReached", PlayerPrefs.GetInt("HighestLevelReached") + 1);
+        mainUI.LevelComplated();
     }
 }
