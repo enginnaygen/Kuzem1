@@ -830,7 +830,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 7809934598439218250, guid: be69af12e6939304d88b35afb36a011c, type: 3}
   bossEnemyPrefab: {fileID: 7809934598439218250, guid: 04f2a40817b892840af687017282b1ba, type: 3}
-  fastEnemyPrefab: {fileID: 0}
+  fastEnemyPrefab: {fileID: 7809934598439218250, guid: 63b1c5a1313bfd748afbaa95dafc25ff, type: 3}
+  shootingEnemyPrefab: {fileID: 7809934598439218250, guid: 03acf07276c17354c90b790c3253275c, type: 3}
   gameDirector: {fileID: 1720294271}
   enemyYSpacing: 2
   enemyParent: {fileID: 1060291442}
@@ -1190,7 +1191,7 @@ GameObject:
   - component: {fileID: 566352050}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

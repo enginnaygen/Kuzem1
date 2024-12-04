@@ -81,18 +81,9 @@ public class Player : MonoBehaviour
     {
         if(collision.CompareTag("Enemy"))
         {
-            currentHealth -= 1;
-
-            UpdateHealthBarFill((float)currentHealth / startHealth);
-
-            if(currentHealth <= 0)
-            {
-                collision.gameObject.SetActive(false);
-                gameObject.SetActive(false);
-                gameDirector.LevelFailed();
-            }
+            GetHit();
         }
-        if(collision.CompareTag("Collectable"))
+        if (collision.CompareTag("Collectable"))
         {
             collision.gameObject.SetActive(false);
         }
@@ -109,6 +100,21 @@ public class Player : MonoBehaviour
             collision.gameObject.SetActive(false);
         }
 
+    }
+
+    public void GetHit()
+    {
+        currentHealth -= 1;
+
+        UpdateHealthBarFill((float)currentHealth / startHealth);
+
+        if (currentHealth <= 0)
+        {
+            gameObject.SetActive(false);
+            gameDirector.LevelFailed();
+        }
+
+        //gameDirector.fxManager.PlayerHitFX();
     }
 
     void UpdateHealthBarFill(float ratio)

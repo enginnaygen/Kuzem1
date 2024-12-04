@@ -11,6 +11,13 @@ public class Bullet : MonoBehaviour
     Vector3 direction;
     GameDirector gameDirector;
 
+    public enum BulletType
+    {
+        Player,
+        Enemy,
+    }
+
+    public BulletType bulletType;
     void Update()
     {
         MoveBullet();
@@ -18,12 +25,18 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Enemy"))
+        if (collision.CompareTag("Enemy") && bulletType == BulletType.Player)
         {
             gameObject.SetActive(false);
             collision.GetComponent<Enemy>().GetHit(damage);
             //gameDirector.fxManager.PlayFX(transform.position,bulletParticle);
             gameDirector.fxManager.PlayBulletdFX(transform.position);
+            Destroy(gameObject);
+        }
+
+        if (collision.CompareTag("Player") && bulletType == BulletType.Enemy)
+        {
+            collision.GetComponent<Player>().GetHit();
             Destroy(gameObject);
         }
 

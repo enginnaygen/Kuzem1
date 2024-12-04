@@ -7,6 +7,7 @@ public class EnemyManager : MonoBehaviour
     public Enemy enemyPrefab;
     public Enemy bossEnemyPrefab;
     public Enemy fastEnemyPrefab;
+    public Enemy shootingEnemyPrefab;
     public GameDirector gameDirector;
 
     public float enemyYSpacing = 2;
@@ -82,7 +83,17 @@ public class EnemyManager : MonoBehaviour
     void SpawnNewEnemy(float minXpos,float maxXpos)
     {
 
-        var newEnemy = Instantiate(enemyPrefab, enemyParent);
+        var selectedEnemyPrefab = enemyPrefab;
+        var randomizer = Random.value;
+        if (gameDirector.levelNo > 2 && randomizer < .33f)
+        {
+            selectedEnemyPrefab = fastEnemyPrefab;
+        }
+        else if (gameDirector.levelNo > 3 && randomizer < .66f)
+        {
+            selectedEnemyPrefab = shootingEnemyPrefab;
+        }
+        var newEnemy = Instantiate(selectedEnemyPrefab);
         float enemyXPos = Random.Range(minXpos, maxXpos);
         float enemyYPos = 4 * enemyYSpacing;
         newEnemy.transform.position = new Vector3(enemyXPos, enemyYPos, 0);

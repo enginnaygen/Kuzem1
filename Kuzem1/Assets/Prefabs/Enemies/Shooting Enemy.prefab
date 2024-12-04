@@ -35,7 +35,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 3, y: 3}
+  m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &4839508762602798304
 MeshRenderer:
@@ -126,8 +126,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 5
+  m_fontSizeBase: 5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -198,7 +198,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4019626229204415539}
@@ -245,7 +245,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 144084b1efb2959449a1132aa37f2721, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.4954924, g: 0.21537907, b: 0.6226415, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -264,10 +264,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4019626229204415539}
+  - component: {fileID: 3636147232512141621}
   - component: {fileID: 7809934598439218250}
-  - component: {fileID: 2114581558661236745}
   m_Layer: 0
-  m_Name: Boss Enemy
+  m_Name: Shooting Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -290,31 +290,8 @@ Transform:
   - {fileID: 8468120258351586819}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7809934598439218250
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5110432568487281585}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c85f20dd54466042bcadff82e91593e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 2
-  minStartHealth: 30
-  maxStartHealth: 40
-  enemyType: 3
-  bulletPrefab: {fileID: 0}
-  attackRate: 0
-  bulletSpeed: 0
-  healthTMP: {fileID: 5166749072878843493}
-  spriteRenderer: {fileID: 6720398888940479302}
-  coinPrefab: {fileID: 7552100674173106038, guid: 82d095be2d3d93340a9a80ad9e50420d, type: 3}
-  powerUpPrefab: {fileID: 4733548880151656406, guid: c96e12fd11e9353449fa15aff16f2040, type: 3}
---- !u!58 &2114581558661236745
-CircleCollider2D:
+--- !u!61 &3636147232512141621
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -346,5 +323,38 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 1.98
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!114 &7809934598439218250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5110432568487281585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c85f20dd54466042bcadff82e91593e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
+  minStartHealth: 10
+  maxStartHealth: 20
+  enemyType: 2
+  bulletPrefab: {fileID: 3864848829381010582, guid: e607f9f6f0cc6b446ab9cadf6ab2bf44, type: 3}
+  attackRate: 1.2
+  bulletSpeed: 5
+  healthTMP: {fileID: 5166749072878843493}
+  spriteRenderer: {fileID: 6720398888940479302}
+  coinPrefab: {fileID: 7552100674173106038, guid: 82d095be2d3d93340a9a80ad9e50420d, type: 3}
+  powerUpPrefab: {fileID: 4733548880151656406, guid: c96e12fd11e9353449fa15aff16f2040, type: 3}

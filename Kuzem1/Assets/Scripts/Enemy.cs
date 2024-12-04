@@ -2,7 +2,9 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditorInternal.Profiling.Memory.Experimental.FileFormat;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Enemy : MonoBehaviour
 {
@@ -12,8 +14,21 @@ public class Enemy : MonoBehaviour
 
     int currentHealth;
     int startHealth;
+    public enum EnemyType
+    {
+        Basic,
+        Fast,
+        Shooting,
+        Boss,
+    }
 
-    public bool isBoss;
+    public EnemyType enemyType;
+
+    private Coroutine _shootCoroutine;
+
+    public Bullet bulletPrefab;
+    public float attackRate;
+    public float bulletSpeed;
 
     public TextMeshPro healthTMP;
     [SerializeField] SpriteRenderer spriteRenderer;
@@ -25,8 +40,10 @@ public class Enemy : MonoBehaviour
     bool didSpawnCoin;
     bool isEnemyDestroyed;
 
+    Color beforeColor;
     public void StartEnemy(Player player)
     {
+        beforeColor = spriteRenderer.color;
         this.player = player;
         maxStartHealth += Random.Range(0, 10);
         startHealth += Random.Range(5,10) * player.shootDirections.Count;
@@ -37,7 +54,38 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        transform.position += Vector3.down * Time.deltaTime * speed;
+        if (enemyType == EnemyType.Shooting)
+        {
+            if (transform.position.y > 3)
+            {
+                transform.position += Vector3.down * Time.deltaTime * speed;
+            }
+            if (_shootCoroutine == null)
+            {
+                _shootCoroutine = StartCoroutine(ShootCoroutine());
+            }
+        }
+        else
+        {
+            transform.position += Vector3.down * Time.deltaTime * speed;
+        }
+    }
+
+    IEnumerator ShootCoroutine()
+    {
+
+        while (true)
+        {
+            yield return new WaitForSeconds(attackRate);
+            var dir = (player.transform.position - transform.position).normalized;
+            Shoot(dir);
+        }
+    }
+    void Shoot(Vector3 dir)
+    {
+        var newBullet = Instantiate(bulletPrefab);
+        newBullet.transform.position = transform.position;
+        newBullet.StartBullet(bulletSpeed, dir, player.gameDirector);
     }
 
     public void GetHit(int damage)
@@ -50,7 +98,6 @@ public class Enemy : MonoBehaviour
         transform.DOScale(1.3f, .2f).SetLoops(2, LoopType.Yoyo);
 
         spriteRenderer.DOKill();
-        spriteRenderer.color = Color.red;
         spriteRenderer.DOColor(Color.white, .1f).SetLoops(2, LoopType.Yoyo);
 
         if(!isEnemyDestroyed)
@@ -65,14 +112,16 @@ public class Enemy : MonoBehaviour
             }
 
         }
-        
+       spriteRenderer.color = beforeColor;
+
+
     }
 
     private void KillEnemy()
     {
         if(!isEnemyDestroyed)
         {
-            if (!isBoss)
+            if (enemyType != EnemyType.Boss)
             {
                 if (Random.value > .5)
                 {
