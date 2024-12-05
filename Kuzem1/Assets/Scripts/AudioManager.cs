@@ -9,11 +9,12 @@ public class AudioManager : MonoBehaviour
 
     public void PlayBulleyAS()
     {
-        //bulletAS.Play(); //eklenecek
+
+        bulletAS.Play(); //eklenecek
     }
 
     public void EnemyDestroyAs()
     {
-        //enemyDestroyrAS.Play(); //eklenecek
+        enemyDestroyrAS.Play(); //eklenecek
     }
 }

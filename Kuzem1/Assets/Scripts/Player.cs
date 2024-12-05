@@ -214,6 +214,7 @@ public class Player : MonoBehaviour
         Bullet newBullet = Instantiate(bulletPrefab, bulletParent);
         newBullet.transform.position = transform.position;
         newBullet.StartBullet(bulletSpeed, direction, gameDirector);
+
         gameDirector.audioManager.PlayBulleyAS();
     }
 }

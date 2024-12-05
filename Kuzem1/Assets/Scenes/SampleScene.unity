@@ -1216,7 +1216,7 @@ MonoBehaviour:
   playerYBorder: 4.5
   startHealth: 5
   bulletSpeed: 5
-  waitShoot: 0.1
+  waitShoot: 0.15
   shootDirections: []
   healthBarFill: {fileID: 133536660}
 --- !u!4 &566352049
@@ -1553,10 +1553,10 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: d8b7b57e95b991c409bc25d1bf1b1aff, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
-  m_Pitch: 1
+  m_Volume: 0.2
+  m_Pitch: 3
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -2285,7 +2285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletAS: {fileID: 782347419}
-  enemyDestroyrAS: {fileID: 0}
+  enemyDestroyrAS: {fileID: 1322424245}
 --- !u!1 &1308388546
 GameObject:
   m_ObjectHideFlags: 0
@@ -2359,7 +2359,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 8818e8874651184428f7b8c3d103af55, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.5
   m_Pitch: 1
@@ -2592,10 +2592,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -2624,7 +2624,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 100
   m_TargetDisplay: 0
 --- !u!224 &1494026241
 RectTransform:
